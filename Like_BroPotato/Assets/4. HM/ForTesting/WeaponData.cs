@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon",menuName = "Scriptable Object/WeaponData")]
 public class WeaponData : ScriptableObject
 {
-    public enum WeaponType {Gun, Meel}
+    public enum WeaponType {Assult, Shothun, DMR}
 
     [Header("## Main Info")]
     public WeaponType weaponType;
@@ -15,11 +15,12 @@ public class WeaponData : ScriptableObject
     public Sprite weaponIcon; // 무기 아이콘 스프라이트
 
     [Header("## Weapon Level Data")]
+
+    public float baseDistance; // 기본 사거리
     public float baseDamage;    // 기본 데미지
     public int baseCount; // 기본 관통
-
-    public float[] damages;
-    public int[] counts;
+    public float baseFireTime; // 기본 연사력
+    public float baseHitRate; // 기본 명중률
 
     [Header("## Gun")]
     public GameObject projectile; // 투사체 프리펩
