@@ -18,6 +18,6 @@ public class BoxOpen : MonoBehaviour
   {
     selectWeapon_UI.SetActive(true);
     yield return new WaitForEndOfFrame();
-    //this.gameObject.SetActive(false);
+    this.gameObject.SetActive(false);
   }
 }

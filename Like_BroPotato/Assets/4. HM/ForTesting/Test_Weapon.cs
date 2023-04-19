@@ -11,8 +11,9 @@ public class Test_Weapon : MonoBehaviour
   public int _Count;       // 관통
   public float _FireTime;  // 연사력
   public float _HitRate;   // 명중률
+  public float _Speed; // 총알 속도 
 
-  float timer; // 원거리 전용 발사속도 타이머
+  [SerializeField]float timer; // 원거리 전용 발사속도 타이머
 
   TestPlayerMove player;
 
@@ -21,9 +22,19 @@ public class Test_Weapon : MonoBehaviour
     player = Test_GameManager.instance.player;
   }
 
+  private void Update()
+  {
+    timer += Time.deltaTime;
+
+        if (timer > _FireTime)
+        {
+          timer = 0;
+          Fire();
+        }
+  }
   public void Init(WeaponData data)
   {
-    name = "Weapon " + data.weaponID;
+    name = "Gun " + data.weaponID;
     transform.parent = player.transform;
     transform.localPosition = Vector3.zero;
 
@@ -33,6 +44,9 @@ public class Test_Weapon : MonoBehaviour
     _Count = data.baseCount;
     _FireTime = data.baseFireTime;
     _HitRate = data.baseHitRate;
+    _Speed = data.baseSpeed;
+
+    player.scanner.scanRange = this._Distance;
 
     for (int i = 0; i < Test_GameManager.instance.poolMgr.Prefebs.Length; i++)
     {
@@ -46,22 +60,22 @@ public class Test_Weapon : MonoBehaviour
 
   public void Fire()
   {
-    if (!player.scanner.nearestTarget)  
-            return;
+    if (!player.scanner.nearestTarget)
+      return;
 
-        // 플레이어와 가장 가까운 타겟의 거리와 방향을 구함
-        Vector3 targetpos = player.scanner.nearestTarget.position;
-        Vector3 dir = targetpos - transform.position;
-        dir = dir.normalized;
+    // 플레이어와 가장 가까운 타겟의 거리와 방향을 구함
+    Vector3 targetpos = player.scanner.nearestTarget.position;
+    Vector3 dir = targetpos - transform.position;
+    dir = dir.normalized;
 
-        Transform bullet;
-        bullet = Test_GameManager.instance.poolMgr.Get(prefabID).transform;
+    Transform bullet;
+    bullet = Test_GameManager.instance.poolMgr.Get(prefabID).transform;
 
-        bullet.position = transform.position;
-        bullet.rotation = Quaternion.FromToRotation(Vector3.up,dir); // 총알을 타겟 방향으로 z축 기준으로 회전
+    bullet.position = transform.position;
+    bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir); // 총알을 타겟 방향으로 z축 기준으로 회전
 
-        bullet.GetComponent<Test_Bullet>().Init(_Damage, _Count, dir); // (Damgae,Per,방향) 데미지와 관통갯수,방향을 전달
-    }
+    bullet.GetComponent<Test_Bullet>().Init(_Damage, _Count,_Speed, dir); // (Damgae,Per,방향) 데미지와 관통갯수,방향을 전달
+  }
 }
 
 
