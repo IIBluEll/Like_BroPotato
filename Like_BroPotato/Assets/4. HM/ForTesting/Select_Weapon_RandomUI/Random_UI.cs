@@ -12,9 +12,7 @@ public class Random_UI : MonoBehaviour
 
     private void OnEnable()
     {
-        Test_GameManager.instance.gameObject.SendMessage("TimeStop",SendMessageOptions.DontRequireReceiver);
-
-        // 리스트 내 데이터들을 Shuffle 함
+        Test_GameManager.instance.TimeStop();
         List<WeaponData> shuffledData = Shuffle(weaponDatas);
 
         for(int i = 0; i < shuffledData.Count; i++)
@@ -47,12 +45,5 @@ public class Random_UI : MonoBehaviour
         }
 
         return shuffledDatas;
-    }
-
-    public void OnClick()
-    {
-         Test_GameManager.instance.gameObject.SendMessage("TimeResume",SendMessageOptions.DontRequireReceiver);
-
-         this.gameObject.SetActive(false);
     }
 }

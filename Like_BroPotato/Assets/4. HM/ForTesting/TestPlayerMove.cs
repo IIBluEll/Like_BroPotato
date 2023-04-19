@@ -8,14 +8,14 @@ public class TestPlayerMove : MonoBehaviour
 
   public float speed;
 
-  public Test_Scanner scanner;
+  public Test_Scanner_Upgrade scanner;
   Rigidbody2D playerRigid;
   SpriteRenderer playerSpriteRender;
   Animator playerAnim;
 
   private void Awake()
   {
-    scanner = this.GetComponent<Test_Scanner>();
+    scanner = this.GetComponent<Test_Scanner_Upgrade>();
     playerRigid = this.GetComponent<Rigidbody2D>();
     playerSpriteRender = this.GetComponent<SpriteRenderer>();
     playerAnim = this.GetComponent<Animator>();

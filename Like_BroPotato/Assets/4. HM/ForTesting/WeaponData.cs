@@ -22,6 +22,8 @@ public class WeaponData : ScriptableObject
     public float baseFireTime; // 기본 연사력
     public float baseHitRate; // 기본 명중률
 
+    public float baseSpeed; // 기본 총알 속도
+
     [Header("## Gun")]
     public GameObject projectile; // 투사체 프리펩
 }

@@ -20,6 +20,7 @@ MonoBehaviour:
   baseDistance: 3
   baseDamage: 50
   baseCount: 1
-  baseFireTime: 5
+  baseFireTime: 1
   baseHitRate: 30
+  baseSpeed: 10
   projectile: {fileID: 2476267983410823221, guid: 648851c077b03f94fa91597deb202076, type: 3}

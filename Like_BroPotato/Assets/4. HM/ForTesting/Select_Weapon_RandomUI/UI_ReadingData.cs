@@ -12,6 +12,9 @@ public class UI_ReadingData : MonoBehaviour
 
     public Image img_WeaponIcon;
 
+    public GameObject select_Weapon_UI;
+    public Test_Weapon weapon;
+
     public void ChangeInfo()
     {
         txt_WeaponName.text = weaponData.weaponName;
@@ -19,5 +22,15 @@ public class UI_ReadingData : MonoBehaviour
         img_WeaponIcon.sprite = weaponData.weaponIcon;
 
         txt_WeaponStat.text = $"데미지 : {weaponData.baseDamage}\n사거리 : {weaponData.baseDistance}\n명중률 : {weaponData.baseHitRate}";
+    }
+
+    public void onClick()
+    {
+        GameObject newWeapon = new GameObject();
+        weapon = newWeapon.AddComponent<Test_Weapon>();
+
+        weapon.Init(weaponData);
+        Test_GameManager.instance.TimeResume();
+        select_Weapon_UI.SetActive(false);
     }
 }
