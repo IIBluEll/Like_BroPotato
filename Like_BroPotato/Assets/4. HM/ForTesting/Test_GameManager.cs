@@ -13,4 +13,14 @@ public class Test_GameManager : MonoBehaviour
     {
         instance = this;
     }
+
+    public void TimeStop()
+    {
+        Time.timeScale  = 0;
+    }
+
+    public void TimeResume()
+    {
+        Time.timeScale = 1;
+    }
 }
