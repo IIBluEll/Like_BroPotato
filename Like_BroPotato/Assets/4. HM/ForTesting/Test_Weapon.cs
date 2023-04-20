@@ -13,7 +13,11 @@ public class Test_Weapon : MonoBehaviour
   public float _HitRate;   // 명중률
   public float _Speed; // 총알 속도 
 
-  [SerializeField]float timer; // 원거리 전용 발사속도 타이머
+  // 샷건 전용
+  public int pelletCount = 5; 
+  public float spreadAngle = 30f; 
+
+  [SerializeField] float timer; // 원거리 전용 발사속도 타이머
 
   TestPlayerMove player;
 
@@ -26,11 +30,11 @@ public class Test_Weapon : MonoBehaviour
   {
     timer += Time.deltaTime;
 
-        if (timer > _FireTime)
-        {
-          timer = 0;
-          Fire();
-        }
+    if (timer > _FireTime)
+    {
+      timer = 0;
+      Fire();
+    }
   }
   public void Init(WeaponData data)
   {
@@ -58,6 +62,7 @@ public class Test_Weapon : MonoBehaviour
     }
   }
 
+  //! 개선 필요! 메서드를 따로 빼서 압축 가능할듯
   public void Fire()
   {
     if (!player.scanner.nearestTarget)
@@ -68,13 +73,41 @@ public class Test_Weapon : MonoBehaviour
     Vector3 dir = targetpos - transform.position;
     dir = dir.normalized;
 
-    Transform bullet;
-    bullet = Test_GameManager.instance.poolMgr.Get(prefabID).transform;
+    switch (id)
+    {
+      case 1:
+      case 3:
 
-    bullet.position = transform.position;
-    bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir); // 총알을 타겟 방향으로 z축 기준으로 회전
+        Transform bullet;
+        bullet = Test_GameManager.instance.poolMgr.Get(prefabID).transform;
 
-    bullet.GetComponent<Test_Bullet>().Init(_Damage, _Count,_Speed, dir); // (Damgae,Per,방향) 데미지와 관통갯수,방향을 전달
+        bullet.position = transform.position;
+        bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir); // 총알을 타겟 방향으로 z축 기준으로 회전
+
+        bullet.GetComponent<Test_Bullet>().Init(_Damage, _Count, _Speed,_HitRate, dir); // (Damgae,Per,방향) 데미지와 관통갯수,방향을 전달
+
+        break;
+
+      case 2:
+
+        float angleStep = spreadAngle / (pelletCount - 1);
+
+        for (int i = 0; i < pelletCount; i++)
+        {
+          float angle = -spreadAngle / 2 + angleStep * i;
+          Quaternion spreadRotation = Quaternion.Euler(0, 0, angle);
+          Vector3 spreadDir = spreadRotation * dir;
+
+          Transform SG_bullet;
+          SG_bullet = Test_GameManager.instance.poolMgr.Get(prefabID).transform;
+
+          SG_bullet.position = transform.position;
+          SG_bullet.rotation = Quaternion.FromToRotation(Vector3.up, spreadDir); // Rotate the bullet around the z-axis towards the target
+
+          SG_bullet.GetComponent<Test_Bullet>().Init(_Damage, _Count, _Speed, _HitRate, spreadDir); // (Damage, Per, Direction) Delivers damage, number of penetrations, and direction
+        }
+        break;
+    }
   }
 }
 
