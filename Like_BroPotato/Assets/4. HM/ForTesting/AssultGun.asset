@@ -17,7 +17,7 @@ MonoBehaviour:
   weaponName: Assult_Gun
   weaponDescription: "\uAE30\uBCF8 \uC18C\uCD1D"
   weaponIcon: {fileID: 563336626, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
-  baseDistance: 3
+  baseDistance: 10
   baseDamage: 10
   baseCount: 1
   baseFireTime: 0.5
