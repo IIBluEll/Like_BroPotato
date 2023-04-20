@@ -4,37 +4,51 @@ using UnityEngine;
 
 public class Test_Bullet : MonoBehaviour
 {
-    public float damage;
-    public int count;
+  public float damage;
+  public int count;
 
-    public float speed;
+  public float speed;
+  public float hitRate;
 
-    Rigidbody2D rigid;
+  Rigidbody2D rigid;
 
-   
-    private void Awake()
+
+  private void Awake()
+  {
+    rigid = GetComponent<Rigidbody2D>();
+  }
+
+  public void Init(float damage, int count, float speed, float hitRate, Vector3 dir)
+  {
+    this.damage = damage;
+    this.count = count;
+    this.speed = speed;
+    this.hitRate = hitRate;
+
+    rigid.velocity = dir * speed;
+  }
+  private void OnTriggerEnter2D(Collider2D other)
+  {
+    float randNum = Random.Range(1, 101);
+
+
+    if (other.CompareTag("Enemy"))
     {
-        rigid = GetComponent<Rigidbody2D>();
+      if (randNum < hitRate)
+      {
+        count--;
+      }
+      if (count == 0)
+      {
+        rigid.velocity = Vector2.zero;
+        gameObject.SetActive(false);
+      }
     }
-
-    public void Init(float damage,int count, float speed, Vector3 dir)
+    else if (other.CompareTag("Wall"))
     {
-        this.damage = damage;
-        this.count = count;
-        this.speed = speed;
-        rigid.velocity = dir * speed;
+      gameObject.SetActive(false);
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(!other.CompareTag("Enemy"))
-            return;
-
-            count--;
-
-            if(count == 0)
-            {
-                rigid.velocity = Vector2.zero;
-                gameObject.SetActive(false);
-            }
-    }
+    else
+      return;
+  }
 }
