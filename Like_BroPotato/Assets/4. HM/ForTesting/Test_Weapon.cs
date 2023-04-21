@@ -21,9 +21,14 @@ public class Test_Weapon : MonoBehaviour
 
   TestPlayerMove player;
 
+  SpriteRenderer player_Gun;
+
+  public GameObject firePos;
   private void Awake()
   {
     player = Test_GameManager.instance.player;
+    player_Gun = GameObject.Find("Gun").GetComponent<SpriteRenderer>();
+    firePos = player.transform.GetChild(0).gameObject;
   }
 
   private void Update()
@@ -39,7 +44,7 @@ public class Test_Weapon : MonoBehaviour
   public void Init(WeaponData data)
   {
     name = "Gun " + data.weaponID;
-    transform.parent = player.transform;
+    transform.parent = firePos.transform;
     transform.localPosition = Vector3.zero;
 
     id = data.weaponID;
@@ -60,6 +65,9 @@ public class Test_Weapon : MonoBehaviour
         break;
       }
     }
+
+    player_Gun.sprite = data.gun_Sprite;
+
   }
 
   //! 개선 필요! 메서드를 따로 빼서 압축 가능할듯

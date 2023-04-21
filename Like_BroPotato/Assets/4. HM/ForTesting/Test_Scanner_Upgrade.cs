@@ -14,7 +14,6 @@ public class Test_Scanner_Upgrade : MonoBehaviour
   public float scanInterval = 0.5f; // 타겟 스캔 간격
 
   public GameObject target_Icon;
-
   void Start()
   {
     sortTargets = new List<Transform>();
@@ -54,6 +53,7 @@ public class Test_Scanner_Upgrade : MonoBehaviour
       yield return new WaitForSeconds(scanInterval);
     }
   }
+
 
   // 거리에 따라 정렬
   void UpdateSortedTargets()
