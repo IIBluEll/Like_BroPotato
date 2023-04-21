@@ -24,3 +24,4 @@ MonoBehaviour:
   baseHitRate: 50
   baseSpeed: 15
   projectile: {fileID: 2476267983410823221, guid: 648851c077b03f94fa91597deb202076, type: 3}
+  gun_Sprite: {fileID: -144335857, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}

@@ -26,4 +26,6 @@ public class WeaponData : ScriptableObject
 
     [Header("## Gun")]
     public GameObject projectile; // 투사체 프리펩
+
+    public Sprite gun_Sprite; // 총 스프라이트
 }
