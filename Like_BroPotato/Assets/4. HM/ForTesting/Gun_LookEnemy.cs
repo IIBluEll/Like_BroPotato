@@ -22,11 +22,11 @@ public class Gun_LookEnemy : MonoBehaviour
 
        // 현재 오브젝트와 타겟 사이의 벡터 계산
         Vector3 direction = target.position - transform.position;
-        // 벡터의 각도를 계산합니다.
+        // 벡터의 각도를 계산
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        // Z 축을 기준으로 회전하는 쿼터니언을 계산합니다.
+        // Z 축을 기준으로 회전하는 쿼터니언을 계산
         Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
-        // 현재 오브젝트의 회전을 타겟 회전으로 설정합니다.
+        // 현재 오브젝트의 회전을 타겟 회전으로 설정
         transform.rotation = targetRotation;
 
     }
