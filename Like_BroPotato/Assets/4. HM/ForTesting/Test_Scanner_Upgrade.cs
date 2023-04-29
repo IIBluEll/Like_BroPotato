@@ -37,7 +37,7 @@ public class Test_Scanner_Upgrade : MonoBehaviour
       {
         nearestTarget = sortTargets[0];
       }
-
+       // 가장 가까운 타겟이 있을 경우 타겟팅 아이콘 표시
       if (nearestTarget != null)
       {
         target_Icon.transform.SetParent(nearestTarget);

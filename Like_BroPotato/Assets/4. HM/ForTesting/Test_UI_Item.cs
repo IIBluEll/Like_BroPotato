@@ -11,10 +11,6 @@ public class Test_UI_Item : MonoBehaviour
     public GameObject select_First_Weapon;
     Image icon;
 
-
-    /// <summary>
-    /// Awake is called when the script instance is being loaded.
-    /// </summary>
     private void Awake()
     {
          // 아이콘 이미지 설정
@@ -26,9 +22,7 @@ public class Test_UI_Item : MonoBehaviour
     {
         GameObject newWeapon = new GameObject();
         weapon = newWeapon.AddComponent<Test_Weapon>();
-
         weapon.Init(data);
-
         select_First_Weapon.SetActive(false);
     }
 }
