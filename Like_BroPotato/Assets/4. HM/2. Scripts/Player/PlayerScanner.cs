@@ -21,26 +21,31 @@ public class PlayerScanner : MonoBehaviour
 
         StartCoroutine(ScanTargets());
     }
-    
+
+    //! FIX IT
     private IEnumerator ScanTargets()
     {
         while (true)
         {
             // 원형 캐스트를 사용하여 타겟 검색
             targets = Physics2D.CircleCastAll(transform.position, scanRange, Vector2.zero, 0, targetLayer);
+            
+            UpdateSortedTargets(); // 타겟 목록을 거리에 따라 정렬
 
-            if (targets.Length == 0)
-                nearestTarget = null;
-            else if (targets.Length > 0 && nearestTarget == null)
-                UpdateSortedTargets(); // 타겟 목록을 거리에 따라 정렬
+            if(sortTargets.Count == 0) nearestTarget = null;
 
+            if (nearestTarget == null && sortTargets.Count > 0)
+            {
+                nearestTarget = sortTargets[0];
+            }
+            
             TargetIconUpdate(nearestTarget);
 
             // 지정된 간격동안 대기
             yield return new WaitForSeconds(scanInterval);
         }
     }
-
+    // FIX IT
     // 가장 가까운 타겟이 있을 경우 타겟팅 아이콘 표시
     private void TargetIconUpdate(Transform target)
     {
@@ -59,6 +64,12 @@ public class PlayerScanner : MonoBehaviour
     // 거리에 따라 정렬
     void UpdateSortedTargets()
     {
+        if (targets.Length == 0)
+        {
+            sortTargets.Clear();
+            return;
+        }
+        
         // 리스트 초기화
         sortTargets.Clear();
 
