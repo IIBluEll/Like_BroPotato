@@ -10,10 +10,7 @@ namespace _4._HM._2._Scripts.Player
         [Header("## Player Status ##"), SerializeField] 
         protected int maxHp = 100;
         private int currentHp;
-        private int sum_Damage = 0; // 내가 받은 모든 데미지
-        private int sum_Healing = 0; // 내가 총 힐한 양
-        private int sum_Kill = 0; // 내가 총 죽인 적 수
-        
+
         [Space(5f),Header("## Invincible Time ##"), SerializeField] 
         protected float invincibilityTime = 2f; // 무적 시간
         
@@ -95,8 +92,6 @@ namespace _4._HM._2._Scripts.Player
             // 데미지를 입었을 때 / 무적 판정 필요
             if (isHitting || isDead)
                 return;
-
-            sum_Damage += amount;
             
             StartCoroutine(InvincibilityTime(amount));
         }
@@ -117,7 +112,6 @@ namespace _4._HM._2._Scripts.Player
         {
             // 힐을 했을 때
             CurrentHp += amount;
-            sum_Healing += amount;
 
             // 힐 이펙트?
             if (!isDead)

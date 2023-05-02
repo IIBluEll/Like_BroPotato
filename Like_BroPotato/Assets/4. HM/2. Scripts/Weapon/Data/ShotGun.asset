@@ -17,10 +17,11 @@ MonoBehaviour:
   weaponName: Shot Gun
   weaponDescription: "\uC0F7\uAC74"
   weaponIcon: {fileID: -762074860, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
-  baseDistance: 5
+  baseDistance: 10
   baseDamage: 5
   baseCount: 1
   baseFireTime: 5
   baseHitRate: 70
   baseSpeed: 10
   projectile: {fileID: 2476267983410823221, guid: 648851c077b03f94fa91597deb202076, type: 3}
+  gunPrefebs: {fileID: 2246175314259587560, guid: e6888e6fa28ec9f46a0aa5a3fb6e2a0a, type: 3}

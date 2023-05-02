@@ -7,25 +7,43 @@ using UnityEngine;
 public class WeaponStatus : MonoBehaviour
 {
     protected float baseDistance; // 기본 사거리
-    protected float baseDamage;    // 기본 데미지
+    protected float baseDamage; // 기본 데미지
     protected int baseCount; // 기본 관통
     protected float baseFireTime; // 기본 연사력
     protected float baseHitRate; // 기본 명중률
     protected float baseSpeed; // 기본 총알 속도
-    
+
     protected PlayerMove player;
     protected PlayerScanner playerScanner;
     protected GameObject firePos;
 
+    [SerializeField] protected float timer;
+
     protected virtual void Start()
     {
-        
+        player = InGameManager.instance.playerObj;
+        playerScanner = player.scanner;
+        firePos = player.transform.GetChild(0).gameObject;
+
+        var transform1 = transform;
+        transform1.parent = firePos.transform;
+        transform1.localPosition = Vector3.zero;
     }
+
     protected virtual void Update()
     {
-        
+        timer += Time.deltaTime;
+
+        if (timer > baseFireTime)
+        {
+            timer = 0;
+            Fire();
+        }
+        // 총구가 적을 계속 볼 수 있도록 회전
+        if (playerScanner.nearestTarget)
+            LookAtEnemy(playerScanner.nearestTarget);
     }
-    
+
     protected void Init(WeaponData data)
     {
         this.baseDistance = data.baseDistance;
@@ -36,6 +54,10 @@ public class WeaponStatus : MonoBehaviour
         this.baseSpeed = data.baseSpeed;
 
         playerScanner.scanRange = baseDistance;
+
+        var transform1 = transform;
+        transform1.parent = firePos.transform;
+        transform1.localPosition = Vector3.zero;
     }
 
     protected virtual void Fire()
@@ -47,18 +69,31 @@ public class WeaponStatus : MonoBehaviour
         Vector3 targetpos = player.scanner.nearestTarget.position;
         Vector3 dir = targetpos - transform.position;
         dir = dir.normalized;
-        
+
         MakeBullet(dir);
     }
-    
+
     protected void MakeBullet(Vector3 _dir)
     {
         var bullet = InGameManager.instance.objPool.Get(0).transform;
-        
+
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, _dir); // 총알을 타겟 방향으로 z축 기준으로 회전
 
         bullet.GetComponent<Test_Bullet>()
             .Init(baseDamage, baseCount, baseSpeed, baseHitRate, _dir); // (Damgae,Per,방향) 데미지와 관통갯수,방향을 전달
+    }
+
+    // 총구가 적을 계속 볼 수 있도록 회전
+    protected void LookAtEnemy(Transform target)
+    {
+        // 현재 오브젝트와 타겟 사이의 벡터 계산
+        Vector3 direction = target.position - transform.position;
+        // 벡터의 각도를 계산
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // Z 축을 기준으로 회전하는 쿼터니언을 계산
+        Quaternion targetRotation = Quaternion.Euler(0, 0, angle);
+        // 현재 오브젝트의 회전을 타겟 회전으로 설정
+        transform.rotation = targetRotation;
     }
 }

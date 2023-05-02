@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ShotGun : WeaponStatus
 {
-    [SerializeField] protected float timer;
-    
-    public WeaponData assult_Data;
-    
+    public WeaponData shotGun_Data;
     // 샷건 전용
     [SerializeField] private int pelletCount = 5;
     [SerializeField] private float spreadAngle = 30f;
@@ -13,24 +11,7 @@ public class ShotGun : WeaponStatus
     protected override void Start()
     {
         base.Start();
-        
-        player = InGameManager.instance.playerObj;
-        playerScanner = player.scanner;
-        firePos = player.transform.GetChild(0).gameObject;
-        Init(assult_Data);
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-        
-        timer += Time.deltaTime;
-
-        if (timer > baseFireTime)
-        {
-            timer = 0;
-            Fire();
-        }
+        Init(shotGun_Data);
     }
 
     protected override void Fire()
