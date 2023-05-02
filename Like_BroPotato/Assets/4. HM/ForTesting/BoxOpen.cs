@@ -10,8 +10,8 @@ public class BoxOpen : MonoBehaviour
   {
     Debug.Log($"Trigger : {other.tag}");
 
-    if(other.tag == "Player")
-        StartCoroutine("PopUp_UI");
+    if(other.CompareTag("Player"))
+        StartCoroutine(nameof(PopUp_UI));
   }
 
   IEnumerator PopUp_UI()

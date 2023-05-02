@@ -43,7 +43,7 @@ public class Test_Weapon : MonoBehaviour
         }
     }
 
-    public void Init(WeaponData data)
+    public void Init(Test_Weapon_Data data)
     {
         name = "Gun " + data.weaponID;
         var transform1 = transform;

@@ -10,7 +10,7 @@ namespace _4._HM._2._Scripts.Player
         [SerializeField] private GameObject slider_FillArea;
         [SerializeField] private Text hpCount;
 
-        private void Awake()
+        private void Start()
         {
             #region CheckNull SerializedField
 
@@ -24,11 +24,12 @@ namespace _4._HM._2._Scripts.Player
             // 이벤트 구독 
             playerHp.OnDamaged += ChangeHpSlider;
             playerHp.OnHealed += ChangeHpSlider;
+            playerHp.OnChangeHealth += ChangeHpSlider;
             playerHp.OnDead += PlayerDied;
 
             ChangeHpSlider();
         }
-
+        
         // 데미지 또는 힐했을 때 HP 슬라이더 변경해야됨
         private void ChangeHpSlider()
         {
@@ -45,6 +46,7 @@ namespace _4._HM._2._Scripts.Player
 
             playerHp.OnDamaged -= ChangeHpSlider;
             playerHp.OnHealed -= ChangeHpSlider;
+            playerHp.OnChangeHealth -= ChangeHpSlider;
             playerHp.OnDead -= PlayerDied;
         }
     }

@@ -33,6 +33,8 @@ public class Test_Bullet : MonoBehaviour
 
     if (other.CompareTag("Enemy"))
     {
+      other.gameObject.GetComponent<EnemyTest>().UpdateText(damage);
+      
       if (randNum < hitRate)
       {
         count--;
