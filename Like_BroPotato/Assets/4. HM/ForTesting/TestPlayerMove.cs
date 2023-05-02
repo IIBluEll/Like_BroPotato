@@ -28,7 +28,7 @@ public class TestPlayerMove : MonoBehaviour
     inputVec.x = Input.GetAxis("Horizontal");
     inputVec.y = Input.GetAxis("Vertical");
 
-    Vector2 moveVec = inputVec.normalized * speed * Time.fixedDeltaTime;
+    Vector2 moveVec = inputVec.normalized * (speed * Time.fixedDeltaTime);
     playerRigid.MovePosition(playerRigid.position + moveVec);
   }
 

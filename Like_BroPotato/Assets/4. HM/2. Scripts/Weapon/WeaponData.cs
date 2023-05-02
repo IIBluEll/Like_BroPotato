@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon",menuName = "Scriptable Object/WeaponData")]
+[CreateAssetMenu(fileName = "WeaponData",menuName = "Scriptable Object/WeaponData")]
 public class WeaponData : ScriptableObject
 {
     public enum WeaponType {Assult, Shothun, DMR}
@@ -14,7 +14,7 @@ public class WeaponData : ScriptableObject
     public string weaponDescription;    // 무기 설명
     public Sprite weaponIcon; // 무기 아이콘 스프라이트
 
-    [Header("## Weapon Level Data")]
+    [Header("## Weapon Stauts Data")]
 
     public float baseDistance; // 기본 사거리
     public float baseDamage;    // 기본 데미지
@@ -26,6 +26,4 @@ public class WeaponData : ScriptableObject
 
     [Header("## Gun")]
     public GameObject projectile; // 투사체 프리펩
-
-    public Sprite gun_Sprite; // 총 스프라이트
 }

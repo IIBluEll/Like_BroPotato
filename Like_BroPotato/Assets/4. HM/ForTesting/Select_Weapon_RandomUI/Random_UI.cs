@@ -7,13 +7,13 @@ using UnityEngine;
 
 public class Random_UI : MonoBehaviour
 {
-    public List<WeaponData> weaponDatas;
+    public List<Test_Weapon_Data> weaponDatas;
     public List<UI_ReadingData> ui_WeaponsIcon;
 
     private void OnEnable()
     {
         Test_GameManager.instance.TimeStop();
-        List<WeaponData> shuffledData = Shuffle(weaponDatas);
+        List<Test_Weapon_Data> shuffledData = Shuffle(weaponDatas);
 
         for(int i = 0; i < shuffledData.Count; i++)
         {
@@ -23,10 +23,10 @@ public class Random_UI : MonoBehaviour
     }
 
     // 리스트 내 데이터들을 Shuffle 함
-    List<WeaponData> Shuffle(List<WeaponData> datas)
+    List<Test_Weapon_Data> Shuffle(List<Test_Weapon_Data> datas)
     {
         // 원래 리스트 복사해옴
-        List<WeaponData> shuffledDatas = new List<WeaponData>(weaponDatas);
+        List<Test_Weapon_Data> shuffledDatas = new List<Test_Weapon_Data>(weaponDatas);
 
         int dataCount = shuffledDatas.Count;
 
@@ -38,10 +38,7 @@ public class Random_UI : MonoBehaviour
             int ranIndex = random.Next(0, i + 1);
 
             // 현재 i 항목을 무작위 인덱스 항목과 교환
-            WeaponData temp = shuffledDatas[i];
-            shuffledDatas[i] = shuffledDatas[ranIndex];
-
-            shuffledDatas[ranIndex] = temp;
+            (shuffledDatas[i], shuffledDatas[ranIndex]) = (shuffledDatas[ranIndex], shuffledDatas[i]);
         }
 
         return shuffledDatas;

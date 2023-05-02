@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Test_UI_Item : MonoBehaviour
 {
-    public WeaponData data;     // 무기 데이터 
+    public Test_Weapon_Data data;     // 무기 데이터 
     public Test_Weapon weapon; // 무기 정보
 
     public GameObject select_First_Weapon;

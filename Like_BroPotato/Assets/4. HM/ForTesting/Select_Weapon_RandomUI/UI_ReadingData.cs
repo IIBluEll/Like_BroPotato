@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UI_ReadingData : MonoBehaviour
 {
-    public WeaponData weaponData;
+    public Test_Weapon_Data weaponData;
     public Text txt_WeaponName;
     public Text txt_WeaponDescription;
     public Text txt_WeaponStat;
