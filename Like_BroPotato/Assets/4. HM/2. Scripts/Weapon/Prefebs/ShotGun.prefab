@@ -98,6 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0
-  assult_Data: {fileID: 11400000, guid: ba488e99a59ce4f47a3d3656566c5c81, type: 2}
+  shotGun_Data: {fileID: 11400000, guid: ba488e99a59ce4f47a3d3656566c5c81, type: 2}
   pelletCount: 5
   spreadAngle: 30

@@ -21,8 +21,7 @@ public class PlayerScanner : MonoBehaviour
 
         StartCoroutine(ScanTargets());
     }
-
-
+    
     private IEnumerator ScanTargets()
     {
         while (true)
@@ -88,5 +87,7 @@ public class PlayerScanner : MonoBehaviour
 
         // 계산된 인덱스에 해당하는 타겟 선택
         nearestTarget = sortTargets[currentIndex];
+
+        TargetIconUpdate(nearestTarget);
     }
 }
