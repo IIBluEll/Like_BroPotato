@@ -21,7 +21,8 @@ public class PlayerScanner : MonoBehaviour
 
         StartCoroutine(ScanTargets());
     }
-    
+
+    //! FIX IT
     private IEnumerator ScanTargets()
     {
         while (true)
@@ -29,24 +30,29 @@ public class PlayerScanner : MonoBehaviour
             // 원형 캐스트를 사용하여 타겟 검색
             targets = Physics2D.CircleCastAll(transform.position, scanRange, Vector2.zero, 0, targetLayer);
 
-            if (targets.Length == 0)
-                nearestTarget = null;
-            else if (targets.Length > 0 && nearestTarget == null)
-                UpdateSortedTargets(); // 타겟 목록을 거리에 따라 정렬
+            // 타겟 목록을 거리에 따라 정렬
+            UpdateSortedTargets();
 
+            if(sortTargets.Count == 0) nearestTarget = null;
+
+            if (nearestTarget == null && sortTargets.Count > 0)
+            {
+                nearestTarget = sortTargets[0];
+            }
+            // 가장 가까운 타겟이 있을 경우 타겟팅 아이콘 표시
             TargetIconUpdate(nearestTarget);
 
             // 지정된 간격동안 대기
             yield return new WaitForSeconds(scanInterval);
         }
     }
-
+    // FIX IT
     // 가장 가까운 타겟이 있을 경우 타겟팅 아이콘 표시
     private void TargetIconUpdate(Transform target)
     {
         if (target != null)
         {
-            target_Icon.transform.SetParent(nearestTarget);
+            target_Icon.transform.SetParent(target);
             target_Icon.transform.localPosition = new Vector3(0f, 0.5f, 0f);
             target_Icon.SetActive(true);
         }
@@ -58,7 +64,7 @@ public class PlayerScanner : MonoBehaviour
 
     // 거리에 따라 정렬
     void UpdateSortedTargets()
-    {
+    { 
         // 리스트 초기화
         sortTargets.Clear();
 
@@ -69,12 +75,10 @@ public class PlayerScanner : MonoBehaviour
         }
 
         // 리스트 내부의 타겟들을 거리에 따라 정렬
-        sortTargets.Sort((a, b) =>
-            Vector3.Distance(transform.position, a.position)
-                .CompareTo(Vector3.Distance(transform.position, b.position)));
-
-        nearestTarget = sortTargets[0];
+        sortTargets.Sort((a, b) => Vector3.Distance(transform.position, a.position).CompareTo(Vector3.Distance(transform.position, b.position)));
     }
+
+    
 
     // 버튼을 누를 때마다 다음 가장 가까운 적을 선택
     public void SelectNextTarget()
