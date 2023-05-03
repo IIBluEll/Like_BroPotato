@@ -3,15 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [Serializable]
 public class WeaponStatus : MonoBehaviour
 {
-    protected float baseDistance; // 기본 사거리
-    protected float baseDamage; // 기본 데미지
-    protected int baseCount; // 기본 관통
-    protected float baseFireTime; // 기본 연사력
-    protected float baseHitRate; // 기본 명중률
-    protected float baseSpeed; // 기본 총알 속도
+    public float BaseDistance { get; set; }
+    public float BaseDamage { get; set; }
+    public int BaseCount { get; set; }
+    public float BaseFireTime { get; set; }
+    public float BaseHitRate { get; set; }
+    public float BaseSpeed { get; set; }
 
     protected PlayerMove player;
     protected PlayerScanner playerScanner;
@@ -34,26 +35,29 @@ public class WeaponStatus : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer > baseFireTime)
+        if (timer > BaseFireTime)
         {
             timer = 0;
             Fire();
         }
+
         // 총구가 적을 계속 볼 수 있도록 회전
         if (playerScanner.nearestTarget)
             LookAtEnemy(playerScanner.nearestTarget);
+
+        playerScanner.scanRange = BaseDistance;
     }
 
     protected void Init(WeaponData data)
     {
-        this.baseDistance = data.baseDistance;
-        this.baseDamage = data.baseDamage;
-        this.baseCount = data.baseCount;
-        this.baseFireTime = data.baseFireTime;
-        this.baseHitRate = data.baseHitRate;
-        this.baseSpeed = data.baseSpeed;
+        InGameManager.instance.ChoicePlayerGun(data.weaponID);
 
-        playerScanner.scanRange = baseDistance;
+        this.BaseDistance = data.baseDistance;
+        this.BaseDamage = data.baseDamage;
+        this.BaseCount = data.baseCount;
+        this.BaseFireTime = data.baseFireTime;
+        this.BaseHitRate = data.baseHitRate;
+        this.BaseSpeed = data.baseSpeed;
 
         var transform1 = transform;
         transform1.parent = firePos.transform;
@@ -81,7 +85,7 @@ public class WeaponStatus : MonoBehaviour
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, _dir); // 총알을 타겟 방향으로 z축 기준으로 회전
 
         bullet.GetComponent<Test_Bullet>()
-            .Init(baseDamage, baseCount, baseSpeed, baseHitRate, _dir); // (Damgae,Per,방향) 데미지와 관통갯수,방향을 전달
+            .Init(BaseDamage, BaseCount, BaseSpeed, BaseHitRate, _dir); // (Damgae,Per,방향) 데미지와 관통갯수,방향을 전달
     }
 
     // 총구가 적을 계속 볼 수 있도록 회전
